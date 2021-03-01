@@ -6,6 +6,7 @@ set -o nounset
 
 
 watchmedo auto-restart \
+    --directory . \
     --patterns="*.py" \
     --recursive \
     --signal 'SIGTERM' \
