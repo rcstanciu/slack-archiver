@@ -1,0 +1,42 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:9.6.21-alpine
+    container_name: postgres
+    environment:
+      - "POSTGRES_USER=${DB_USER:-archiver}"
+      - "POSTGRES_PASSWORD=${DB_PASS:-LAntEncaprIanDwe}"
+      - "POSTGRES_DB=${DB_NAME:-archiverdb}"
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+    networks:
+      - inner_network
+
+  archiver:
+    build:
+      context: .
+      dockerfile: ./compose/local/archiver/Dockerfile
+    container_name: archiver
+    environment:
+      - "DB_USER=${DB_USER:-archiver}"
+      - "DB_PASS=${DB_PASS:-LAntEncaprIanDwe}"
+      - "DB_NAME=${DB_NAME:-archiverdb}"
+      - "DB_HOST=${DB_NAME:-postgres}"
+      - "DB_PORT=${DB_PORT:-5432}"
+      - "SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}"
+      - "SLACK_SIGNING_SECRET=${SLACK_SIGNING_SECRET}"
+    networks:
+      - inner_network
+    ports:
+      - 3000:3000
+    volumes:
+      - ./archiver:/app
+    command: /start
+
+volumes:
+  local_postgres_data: {}
+
+networks:
+  inner_network:
+    driver: bridge
