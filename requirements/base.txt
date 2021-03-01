@@ -5,3 +5,4 @@ slack_bolt==1.4.1  # https://github.com/slackapi/bolt-python
 # PostgreSQL
 # ------------------------------------------------------------------------------
 psycopg2==2.8.6  # https://github.com/psycopg/psycopg2
+SQLAlchemy==1.3.23  # https://github.com/sqlalchemy/sqlalchemy
