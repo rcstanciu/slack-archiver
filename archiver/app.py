@@ -1,5 +1,7 @@
 from os import environ
 
+import log  # noqa: F401
+import db  # noqa: F401
 from handlers.message import message_handler
 from slack_bolt import App
 
